@@ -29,4 +29,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    // Bir kullanıcının birçok sözü olabilir (İlişki tanımlama)
+    public function quotes()
+    {
+        return $this->hasMany(Quote::class);
+    }
 }
