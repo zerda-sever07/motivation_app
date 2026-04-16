@@ -6,6 +6,7 @@
     <title>Günün Motivasyonu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Playfair+Display:italic,wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body { font-family: 'Quicksand', sans-serif; }
         .quote-font { font-family: 'Playfair Display', serif; }
@@ -53,16 +54,29 @@
             <h2 class="text-2xl font-bold text-gray-800 mb-4 ml-2">Son İlhamlar</h2>
 
             @forelse($quotes as $quote)
-                <div class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-white/40 hover:shadow-md transition duration-300">
+                <div class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-sm border border-white/40 hover:shadow-md transition duration-300 group relative overflow-hidden">
                     <div class="flex items-start gap-4">
                         <span class="text-4xl text-amber-600/30 quote-font">“</span>
                         <div class="flex-1">
                             <p class="text-xl text-gray-800 quote-font mb-3 leading-relaxed">
                                 {{ $quote->content }}
                             </p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-sm font-semibold text-amber-800/70">— {{ $quote->author }}</span>
-                                <span class="text-[10px] text-gray-400">{{ $quote->created_at->diffForHumans() }}</span>
+                            <div class="flex justify-between items-end">
+                                <div>
+                                    <span class="text-sm font-semibold text-amber-800/70">— {{ $quote->author }}</span>
+                                    <div class="text-[10px] text-gray-400 mt-1">{{ $quote->created_at->diffForHumans() }}</div>
+                                </div>
+
+                                <form action="{{ route('quotes.destroy', $quote) }}" method="POST"
+                                    onsubmit="return confirm('Bu güzel düşünceyi silmek istediğine emin misin?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="opacity-0 group-hover:opacity-100 transition-all duration-300 p-2 rounded-full hover:bg-red-50 text-red-300 hover:text-red-500 flex items-center justify-center"
+                                        title="Sil">
+                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -79,5 +93,8 @@
         </p>
     </div>
 
+    <script>
+      lucide.createIcons();
+    </script>
 </body>
 </html>

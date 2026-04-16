@@ -35,4 +35,12 @@ class QuoteController extends Controller
         // İşlem bitince sayfayı yenile (Geri dön)
         return back();
     }
+    public function destroy(\App\Models\Quote $quote)
+   {
+    // Sözü veri tabanından sil
+    $quote->delete();
+
+    // Sayfaya geri dön
+    return back();
+   }
 }
