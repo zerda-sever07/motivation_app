@@ -99,6 +99,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="flex items-center gap-3">
+    <form action="{{ route('quotes.like', $quote) }}" method="POST">
+        @csrf
+        <button type="submit" class="flex items-center gap-1 text-slate-400 hover:text-pink-500 transition-colors duration-300 group/like">
+            <i data-lucide="heart" class="w-4 h-4 group-hover/like:fill-pink-500"></i>
+            <span class="text-xs font-mono">{{ $quote->likes }}</span>
+        </button>
+    </form>
+
+    </div>
             @empty
                 <div class="text-center py-16 border border-dashed border-purple-500/20 rounded-3xl">
                     <p class="code-font text-purple-400/50 tracking-widest">EMPTY_DATABASE: NO_DATA_FOUND</p>

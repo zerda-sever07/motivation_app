@@ -13,3 +13,4 @@ Route::post('/quotes', [QuoteController::class, 'store'])->name('quotes.store');
 
 Route::get('/', [QuoteController::class, 'index']);
 Route::delete('/quotes/{quote}', [QuoteController::class, 'destroy'])->name('quotes.destroy');
+Route::post('/quotes/{quote}/like', [QuoteController::class, 'like'])->name('quotes.like');

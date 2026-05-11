@@ -43,4 +43,10 @@ class QuoteController extends Controller
     // Sayfaya geri dön
     return back();
    }
+
+   public function like(Quote $quote)
+{
+    $quote->increment('likes'); // Beğeni sayısını 1 artırır
+    return back();
+}
 }
