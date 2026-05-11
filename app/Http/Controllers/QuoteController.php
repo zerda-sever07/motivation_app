@@ -9,13 +9,12 @@ class QuoteController extends Controller
 {
     // Tüm sözleri listeleme fonksiyonu
     public function index()
-    {
-        // Tüm sözleri en son eklenenden başlayarak getir
-        $quotes = Quote::latest()->get();
-
-        // Bu sözleri 'quotes/index.blade.php' sayfasına gönder
-        return view('quotes.index', compact('quotes'));
-    }
+{
+    return view('quotes.index', [
+        'quotes' => Quote::latest()->get(),
+        'trends' => Quote::orderBy('likes', 'desc')->take(3)->get(), // En popüler 3 söz
+    ]);
+}
 
     // Yeni sözü veri tabanına kaydetme fonksiyonu
     public function store(Request $request)
@@ -44,9 +43,19 @@ class QuoteController extends Controller
     return back();
    }
 
-   public function like(Quote $quote)
+  public function like(\App\Models\Quote $quote)
 {
-    $quote->increment('likes'); // Beğeni sayısını 1 artırır
+    $quote->increment('likes');
     return back();
+}
+
+public function random()
+{
+    // Rastgele bir söz seç ve index sayfasına o sözle git
+    $randomQuote = \App\Models\Quote::inRandomOrder()->first();
+    return view('quotes.index', [
+        'quotes' => \App\Models\Quote::latest()->get(),
+        'highlight' => $randomQuote // Öne çıkarılacak rastgele söz
+    ]);
 }
 }
